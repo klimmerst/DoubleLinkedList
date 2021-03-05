@@ -11,7 +11,10 @@ class DoubleNode(Node):
 
     @property
     def prev_node(self):
-        return self._prev_node()
+        if self._prev_node is not None:
+            return self._prev_node()
+        else:
+            return self._prev_node
 
     @prev_node.setter
     def prev_node(self, value):
@@ -47,6 +50,12 @@ class DoubleLinkedList(LinkedList):
 
         node = self._search_from_start_or_end(key)
         node.data = value
+
+    def __reversed__(self):
+        current_node = self.tail
+        while current_node is not None:
+            yield current_node
+            current_node = current_node.prev_node
 
     def append(self, data):
         new_node = DoubleNode(data)
@@ -139,15 +148,9 @@ class DoubleLinkedList(LinkedList):
                 if i == index:
                     return node
         else:
-            for i, node in enumerate(self._node_iter_revert()):
+            for i, node in enumerate(reversed(self)):
                 if len(self) - 1 - i == index:
                     return node
-
-    def _node_iter_revert(self):
-        current_node = self.tail
-        while current_node is not None:
-            yield current_node
-            current_node = current_node.prev_node
 
     def index(self, data: Any, start='left'):
 
@@ -158,11 +161,29 @@ class DoubleLinkedList(LinkedList):
             raise IndexError("There's no such data")
 
         elif start == 'right':
-            index = len(self) - 1
-            for node in self._node_iter_revert():
+            for i, node in enumerate(reversed(self), start=-len(self)):
                 if node.data == data:
-                    return index
-                index -= 1
+                    return abs(i + 1)
             raise IndexError("There's no such data")
 
         raise ValueError('Arg "start" can be only "left" or "right"')
+
+
+def main():
+    ll = DoubleLinkedList()
+    ll.append("e")
+    ll.append("e")
+    ll.append("e")
+    ll.append("e")
+    ll.append("a")
+    ll.append("b")
+    ll.append("c")
+    ll.append("d")
+    ll.append("e")
+    ll.append("e")
+    print(str(ll))
+    print(ll._search_from_start_or_end(3))
+    print(ll.index('d', start='right'))
+
+if __name__ == '__main__':
+    main()
