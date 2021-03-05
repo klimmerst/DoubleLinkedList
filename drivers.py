@@ -112,7 +112,7 @@ class LinkedListWithDriver(LinkedList):
         self._driver.write(ll_list)
 
 
-if __name__ == '__main__':
+def main():
     driver = FabricDriverBuilder.get_driver()
     print(driver)
     ll = LinkedListWithDriver(driver)
@@ -122,3 +122,6 @@ if __name__ == '__main__':
     ll.append("d")
     ll.append("e")
     ll.write()
+
+if __name__ == '__main__':
+    main()
