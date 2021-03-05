@@ -5,8 +5,7 @@ from linked_list import Node, LinkedList
 
 class DoubleNode(Node):
     def __init__(
-            self, data: Any, next_node: Optional["Node"] = None, prev_node: Optional["Node"] = None
-    ):
+            self, data: Any, next_node: Optional["Node"] = None, prev_node: Optional["Node"] = None):
         super().__init__(data, next_node)
         self.prev_node = prev_node
 
